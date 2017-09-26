@@ -65,7 +65,6 @@ MongoClient.connect('mongodb://localhost:27017/db').then((db)=>{
 	//Suppose that we have 3 documents with the same name 'Anass Daoudi'
 	//findOne method using the filter criteria {name:'Anass Daoudi'} will
 	//just return the first document that match it 
-
 	db.collection('Users',(error,collection)=>{
 		if(error){
 			return console.log('Error while fetching Users collection!',error);
@@ -78,6 +77,15 @@ MongoClient.connect('mongodb://localhost:27017/db').then((db)=>{
 			console.log('Error has been detected while searching the document!',error);
 		});
 	});
+
+	//delete one document that match the filter criteria
+	 db.collection('Users').deleteOne({
+     	text: 'Anass Daoudi'
+     }).then((result) => {
+     	console.log('Result information',result);
+     }, (error) => {
+     	console.log('Error has been detected while deleting the document!',error);
+     });
 
 	db.close(false).then((result)=>{
 			console.log('Connection to MongoDB server has been successfully closed.');
