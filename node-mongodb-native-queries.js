@@ -18,6 +18,23 @@ MongoClient.connect('mongodb://localhost:27017/db').then((db)=>{
 		});
 	});
 
+	//insert many documents once into Users collection
+	db.collection('Users',(error,collection)=>{
+		if(error){
+			return console.log('Error while fetching Users collection!',error);
+		}
+		collection.insertMany([
+			{
+				name:'Anass Daoudi'
+			},{
+				name:'Someone Else'
+			}
+		]).then((result)=>{
+			console.log('Inserted documents are',JSON.stringify(result.ops,undefined,2))
+		},(error)=>{
+			console.log('Error while inserting the documents!',error);
+		});
+	});
 
 	db.close(false).then((result)=>{
 			console.log('Connection to MongoDB server has been successfully closed.');
