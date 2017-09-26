@@ -1,4 +1,4 @@
-const {MongoClient}=require('mongodb');
+const {MongoClient,ObjectID}=require('mongodb');
 
 
 MongoClient.connect('mongodb://localhost:27017/db').then((db)=>{
@@ -33,6 +33,31 @@ MongoClient.connect('mongodb://localhost:27017/db').then((db)=>{
 			console.log('Inserted documents are',JSON.stringify(result.ops,undefined,2))
 		},(error)=>{
 			console.log('Error while inserting the documents!',error);
+		});
+	});
+
+	//find document(s) that match the filter criteria
+	db.collection('Users',(error,collection)=>{
+		if(error){
+			return console.log('Error while fetching Users collection!',error);
+		}
+		let cursor=collection.find({
+			//Use _id as filter criteria
+			_id:new ObjectID('59cabfab94da892a1cf2b090')
+		});
+
+		//call toArray() method on the cursor object let getting an array of all documents
+		//that the cursor iterate on
+		//Note: When the cursor had been already accessed using its methods like next, the array
+		//will get just those not accessed documents.
+		//To get all documents even if the cursor had been accessed, call rewind() on the cursor object
+		//to reset it then call toArray() method 
+
+		cursor.toArray().then((documents)=>{
+			console.log('The eventual searched document is',JSON.stringify(documents,undefined,2));
+			//Multiple retured documents are possible due to the filter criteria
+		},(error)=>{
+			console.log('Error has been detected while searching the document!',error);
 		});
 	});
 
