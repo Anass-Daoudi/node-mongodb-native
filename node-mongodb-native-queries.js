@@ -80,11 +80,20 @@ MongoClient.connect('mongodb://localhost:27017/db').then((db)=>{
 
 	//delete one document that match the filter criteria
 	 db.collection('Users').deleteOne({
-     	text: 'Anass Daoudi'
+     	name: 'Anass Daoudi'
      }).then((result) => {
      	console.log('Result information',result);
      }, (error) => {
      	console.log('Error has been detected while deleting the document!',error);
+     });
+
+     //delete all documents that match the filter criteria
+     db.collection('Users').deleteMany({
+     	name: 'Anass Daoudi'
+     }).then((result) => {
+     	console.log('Result information',result);
+     }, (error) => {
+     	console.log('Error has been detected while deleting the document(s)!',error);
      });
 
 	db.close(false).then((result)=>{
