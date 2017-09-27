@@ -105,6 +105,26 @@ MongoClient.connect('mongodb://localhost:27017/db').then((db)=>{
      	console.log('Error has been detected while deleting the document!',error);
      });
 
+     //update one document that match the filter criteria and return the updated or the
+     //original format of that eventual updated document
+     db.collection('Users').findOneAndUpdate({
+     	_id:new ObjectID('59cc12ba9542891ed448db09')
+     },{
+     	$set:{
+     		name:'New Name'
+     	}
+     },{
+     	//According to returnOriginal property set to true(default value) or false
+     	//we get respectively the original or the updated format of the eventual updated document
+     	returnOriginal:false
+     }).then((result)=>{
+     	console.log(JSON.stringify(result.value,undefined,2));
+     },(error)=>{
+		console.log('Error has been detected while updating the eventual document!',error);
+     });
+
+
+
 	db.close(false).then((result)=>{
 			console.log('Connection to MongoDB server has been successfully closed.');
 		},(error)=>{
