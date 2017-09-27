@@ -96,6 +96,15 @@ MongoClient.connect('mongodb://localhost:27017/db').then((db)=>{
      	console.log('Error has been detected while deleting the document(s)!',error);
      });
 
+     //delete one document that match the criteria filter and return it
+     db.collection('Users').findOneAndDelete({
+     	_id:new ObjectID('59cc11040b2acb16acee7832')
+     }).then((result)=>{
+     	console.log('Eventual deleted document returned',JSON.stringify(result.value,undefined,2));
+     },(error)=>{
+     	console.log('Error has been detected while deleting the document!',error);
+     });
+
 	db.close(false).then((result)=>{
 			console.log('Connection to MongoDB server has been successfully closed.');
 		},(error)=>{
